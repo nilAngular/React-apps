@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-
+import React, { useState,useContext } from "react";
+import { MovieContext } from "./Moviecontext";
+ 
 function MovieCard({
   movieObject,
-  addToWatchList,
-  removeFromWatchList,
-  watchList,
 }) {
+
+  const { watchlist, addToWatchList, removeFromWatchList } = useContext(MovieContext);
+
   function isPresentInWatchlist() {
-    for(let movieData of watchList){
+    for(let movieData of watchlist){
       if(movieData.id == movieObject.id) return true;
     }
     return false;

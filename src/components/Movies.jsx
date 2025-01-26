@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from "react";
 import MovieCard from "./Moviecard";
+import { useContext } from "react";
+import { MovieContext } from "./Moviecontext";
 
 function Movies() {
   // setup basic pagination
   const [pageNo, setPageNo] = useState(1);
-  const [watchlist, setWatchlist] = useState([]);
+  const { watchlist, addToWatchList, removeFromWatchList } = useContext(MovieContext);
   // go next handler
   const handleNext = () => {
     setPageNo(pageNo + 1)
@@ -35,28 +37,6 @@ function Movies() {
       })
       .catch(err => console.error(err));
   },[pageNo])
-
-  const removeFromWatchList = (id) => {
-    let updatedWatchlist = watchlist.filter((movie) => movie.id != id);
-    localStorage.setItem("watchList",JSON.stringify(updatedWatchlist));
-    setWatchlist(updatedWatchlist);
-    
-  }
-
-  const addToWatchList = (movie) => {
-    console.log("adding movie to watchlist");
-    let updatedWatchlist = [...watchlist,movie];
-    localStorage.setItem("watchList",JSON.stringify(updatedWatchlist));
-    setWatchlist(updatedWatchlist)
-  }
-
-  useEffect(() => {
-    let stringifiedWatchlist = localStorage.getItem("watchList") ;
-    if(!stringifiedWatchlist) return;
-    let watchList = JSON.parse(stringifiedWatchlist);
-    setWatchlist(watchList);
-  },[])
-
 
   return (
     <div>

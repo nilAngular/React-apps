@@ -1,37 +1,34 @@
-import React, { act, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import genreids from "../utility";
+import { useMovieContext } from "./Moviecontext";
 
 function WatchList() {
   const [watchList, setWatchList] = useState([]);
   const [search, setSearch] = useState("");
   const [actionList,setActionList] = useState([]);
   const [currGenre, setCurrGenre] = useState("All Genres");
-  useEffect(() => {
-    let stringifiedWatchlist = localStorage.getItem("watchList") ;
-    if(!stringifiedWatchlist) return;
-    let watchList = JSON.parse(stringifiedWatchlist);
-    getActionList(watchList);
-    setWatchList(watchList);
-  }, []);
+
+  const {watchlist,setWatchlist,removeFromWatchList} = useMovieContext();
+
 
   useEffect(() =>{
-    getActionList(watchList);
-  },[watchList])
+    getActionList(watchlist);
+  },[watchlist])
 
   const handleAscendingRatings = () => {
-   let updatedWatchlist = watchList.sort((a,b) =>
+   let updatedWatchlist = watchlist.sort((a,b) =>
     a.vote_average-b.vote_average
    );
    console.log(updatedWatchlist,"ltoh"); 
-   setWatchList([...updatedWatchlist]);
+   setWatchlist([...updatedWatchlist]);
   }
 
   const handleDescendingRatings = () => {
-    let updatedWatchlist = watchList.sort((a,b) =>
+    let updatedWatchlist = watchlist.sort((a,b) =>
       b.vote_average-a.vote_average
      );
      console.log(updatedWatchlist,"updated");    
-     setWatchList([...updatedWatchlist]);
+     setWatchlist([...updatedWatchlist]);
   }
 
   function setAction(genre_id){
@@ -86,9 +83,9 @@ function WatchList() {
             <th className="px-6 py-4 font-medium text-gray-900">Name</th>
             <th>
               <div className="flex">
-              <i onClick={handleAscendingRatings} class="fa-solid fa-arrow-up"></i>
+              <i onClick={handleAscendingRatings} className="fa-solid fa-arrow-up"></i>
                 <div>Ratings</div>
-                <i onClick={handleDescendingRatings} class="fa-solid fa-arrow-down"></i>
+                <i onClick={handleDescendingRatings} className="fa-solid fa-arrow-down"></i>
               </div>
             </th>
             <th>
@@ -109,7 +106,7 @@ function WatchList() {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-          {watchList
+          {watchlist
           .filter(movie => { 
             if(currGenre == "All Genres") return true
             return genreids[movie.genre_ids[0]] == currGenre })
@@ -131,6 +128,7 @@ function WatchList() {
               <td className="pl-6 py-4">{movie.vote_average}</td>
               <td className="pl-6 py-4">{movie.popularity}</td>
               <td className="pl-2 py-4">{setAction(movie.genre_ids[0])}</td>
+              <td><i className="fa fa-trash cursor-pointer" style={{color:"#fa1100"}} aria-hidden="true" onClick={() => removeFromWatchList(movie.id)}></i></td>
             </tr>
           ))}
         </tbody>
