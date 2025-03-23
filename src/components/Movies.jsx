@@ -1,12 +1,12 @@
 import React, { useState,useEffect } from "react";
 import MovieCard from "./Moviecard";
 import { useContext } from "react";
-import { MovieContext } from "./Moviecontext";
+import { Moviecontext } from "./Moviecontext";
 
 function Movies() {
   // setup basic pagination
   const [pageNo, setPageNo] = useState(1);
-  const { watchlist, addToWatchList, removeFromWatchList } = useContext(MovieContext);
+  const { watchlist, addToWatchList, removeFromWatchList } = useContext(Moviecontext);
   // go next handler
   const handleNext = () => {
     setPageNo(pageNo + 1)

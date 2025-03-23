@@ -1,6 +1,6 @@
 import { createContext,useContext } from "react";
 import { useState,useEffect } from "react";
-export const MovieContext = createContext();
+export const Moviecontext = createContext();
 
 
 export const MovieContextProvider = ({children}) =>{
@@ -27,7 +27,7 @@ export const MovieContextProvider = ({children}) =>{
     };
   
     return (
-      <MovieContext.Provider
+      <Moviecontext.Provider
         value={{
           watchlist,
           setWatchlist,
@@ -36,10 +36,10 @@ export const MovieContextProvider = ({children}) =>{
         }}
       >
         {children}
-      </MovieContext.Provider>
+      </Moviecontext.Provider>
     );
 }
 
 export const useMovieContext = () =>{
-    return useContext(MovieContext)
+    return useContext(Moviecontext)
 }

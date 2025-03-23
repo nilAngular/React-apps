@@ -1,11 +1,11 @@
 import React, { useState,useContext } from "react";
-import { MovieContext } from "./Moviecontext";
+import { Moviecontext } from "./Moviecontext";
  
 function MovieCard({
   movieObject,
 }) {
 
-  const { watchlist, addToWatchList, removeFromWatchList } = useContext(MovieContext);
+  const { watchlist, addToWatchList, removeFromWatchList } = useContext(Moviecontext);
 
   function isPresentInWatchlist() {
     for(let movieData of watchlist){
