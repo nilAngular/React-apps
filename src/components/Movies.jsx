@@ -17,7 +17,6 @@ function Movies() {
     setPageNo(pageNo - 1)
   };
 
-  // we will be using this static list of movies then we will replace it with actual  data fetching logic
   const [movies, setMovies] = useState([]);
 
   useEffect(()=>{

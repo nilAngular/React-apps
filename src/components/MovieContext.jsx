@@ -3,7 +3,7 @@ import { useState,useEffect } from "react";
 export const MovieContext = createContext();
 
 
-export default MovieContextProvider = ({children}) =>{
+export const MovieContextProvider = ({children}) =>{
     const [watchlist, setWatchlist] = useState([]);
 
     useEffect(() => {
